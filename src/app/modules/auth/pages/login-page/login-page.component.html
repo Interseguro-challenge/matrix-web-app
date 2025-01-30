@@ -1,0 +1,39 @@
+<div class="container">
+  <mat-card>
+    <div>
+      <p>Iniciar sesión</p>
+      <h1 align="center">Factorización QR de Matriz</h1>
+    </div>
+    <br />
+    <form [formGroup]="userForm">
+      <mat-form-field class="form-items" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input formControlName="email" matInput placeholder="Email" required />
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint>Ingresa tu email</mat-hint>
+      </mat-form-field>
+      <br />
+      <br />
+      <mat-form-field class="form-items" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-hint>Ingresa tu password</mat-hint>
+      </mat-form-field>
+    </form>
+    <br />
+    <button [disabled]="loading" type="submit" mat-flat-button color="primary" class="btn-login" (click)="sendLogin()">
+      <span *ngIf="!loading">Iniciar sesión</span>
+      <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+    </button>
+    <br />
+  </mat-card>
+</div>

@@ -1,0 +1,20 @@
+<h1 mat-dialog-title align="center">
+	¿ Estas seguro que deseas eliminar el {{ toDeleteItemName }} ?
+</h1>
+<div mat-dialog-actions align="center">
+	<button
+		cdkFocusInitial
+		mat-raised-button
+		(click)="onCancel()"
+		class="btn-gkn-md btn-gkn-tertiary margin-right"
+	>
+		Cancelar
+	</button>
+	<button
+		mat-raised-button
+		[mat-dialog-close]="true"
+		class="btn-gkn-md btn-gkn-secondary"
+	>
+		Confirmar
+	</button>
+</div>

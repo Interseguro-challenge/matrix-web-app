@@ -1,0 +1,43 @@
+<h1 mat-dialog-title align="center">{{ data.title }}</h1>
+
+<mat-dialog-content>
+  <div style="display: flex; justify-content: center; margin-bottom: 40px; margin-top: 30px">
+    <mat-icon style="color: green" *ngIf="data.type === InfoModalType.SUCCESS">check_circle</mat-icon>
+    <mat-icon style="color: red" *ngIf="data.type === InfoModalType.ERROR">error</mat-icon>
+    <mat-icon style="color: blue" *ngIf="data.type === InfoModalType.CONFIRM">check_circle_outline</mat-icon>
+    <mat-icon style="color: gray" *ngIf="data.type === InfoModalType.INFO">info</mat-icon>
+    <mat-icon style="color: orange" *ngIf="data.type === InfoModalType.WARNING">warning</mat-icon>
+  </div>
+
+  <div
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 15px 0;
+      max-width: 450px;
+      min-width: 300px;
+    "
+  >
+    <span align="center">{{ data.message }}</span>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <button
+    mat-button
+    color="primary"
+    [mat-dialog-close]="true"
+    *ngIf="data.type === InfoModalType.SUCCESS || data.type === InfoModalType.CONFIRM"
+  >
+    Aceptar
+  </button>
+
+  <button mat-button color="warn" *ngIf="data.type === InfoModalType.ERROR" mat-dialog-close>Cerrar</button>
+
+  <button mat-button *ngIf="data.type === InfoModalType.CONFIRM" mat-dialog-close>Cancelar</button>
+
+  <button mat-button *ngIf="data.type === InfoModalType.INFO || data.type === InfoModalType.WARNING" mat-dialog-close>
+    Cerrar
+  </button>
+</mat-dialog-actions>

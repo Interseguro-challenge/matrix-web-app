@@ -1,0 +1,58 @@
+<table mat-table #table [dataSource]="dataSource">
+  <!-- COLUMN -->
+  <ng-container *ngFor="let column of displayedColumns; index as i" [matColumnDef]="column">
+    <th *matHeaderCellDef>
+      {{ tableConfig.columns[i].title }}
+    </th>
+
+    <!-- TYPED COLS -->
+    <td *matCellDef="let element" style="text-align: center">
+      <!-- STRING COLS -->
+      <ng-container *ngIf="tableConfig.columns[i].type === 'STRING'">
+        <span *ngIf="!tableConfig.columns[i].name.includes('.')">{{ element[tableConfig.columns[i].name] }}</span>
+        <span *ngIf="tableConfig.columns[i].name.includes('.')">{{
+          element[tableConfig.columns[i].name.split('.')[0]][tableConfig.columns[i].name.split('.')[1]]
+        }}</span>
+      </ng-container>
+
+      <!-- NUMBER COLS -->
+      <ng-container *ngIf="tableConfig.columns[i].type === 'NUMBER'">
+        {{ element[tableConfig.columns[i].name] }}
+      </ng-container>
+
+      <!-- DATE COLS -->
+      <ng-container *ngIf="tableConfig.columns[i].type === 'DATE'">
+        {{ element[tableConfig.columns[i].name] | date }}
+      </ng-container>
+
+      <!-- BOOLEAN COLS -->
+      <ng-container *ngIf="tableConfig.columns[i].type === 'BOOLEAN'">
+        {{
+          element[tableConfig.columns[i].name] == true
+            ? tableConfig.columns[i].boolPipe?.boolTrue
+            : tableConfig.columns[i].boolPipe?.boolFalse
+        }}
+      </ng-container>
+
+      <!-- MULTIOPTIONS -->
+
+      <!-- OPTIONS COLS -->
+      <div *ngIf="tableConfig.columns[i].type === 'OPTION'">
+        <button
+          *ngFor="let option of tableConfig.columns[i].options; index as j"
+          mat-icon-button
+          color="primary"
+          (click)="onOptionSelected(element, tableConfig.columns[i].options![j].action)"
+        >
+          <mat-icon>{{ tableConfig.columns[i].options![j].icon }}</mat-icon>
+        </button>
+      </div>
+    </td>
+  </ng-container>
+
+  <!-- COLS DEF -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<p *ngIf="data.length === 0" style="text-align: center">No se encontraron datos registrados</p>

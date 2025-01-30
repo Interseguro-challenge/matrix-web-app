@@ -1,0 +1,58 @@
+<button
+  style="position: fixed; left: 15%; top: 30%"
+  mat-raised-button
+  routerLink="/factorizacion-qr"
+  (click)="onLogOut()"
+>
+  Cerrar sesión
+</button>
+
+<div class="container">
+  <h2>Factorización QR de Matriz</h2>
+
+  <!-- Formulario para ingresar tamaño de la matriz -->
+  <form [formGroup]="matrixForm">
+    <div class="form-controls">
+      <mat-form-field appearance="outline">
+        <mat-label>Filas</mat-label>
+        <input matInput type="number" formControlName="rows" (change)="generateMatrix()" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Columnas</mat-label>
+        <input matInput type="number" formControlName="cols" (change)="generateMatrix()" />
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="generateMatrix()">Generar Matriz</button>
+    </div>
+  </form>
+
+  <!-- Matriz Dinámica -->
+  <div class="matrix-container">
+    <div *ngFor="let row of matrix.controls; let i = index" class="matrix-row">
+      <mat-form-field *ngFor="let cell of getMatrixRowControls(i); let j = index" appearance="outline">
+        <input matInput type="number" [formControl]="cell" />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <button mat-raised-button color="accent" (click)="sendMatrix()" [disabled]="isLoading || matrixForm.invalid">
+    {{ isLoading ? 'Procesando...' : 'Enviar Matriz' }}
+  </button>
+
+  <!-- Resultado -->
+  <mat-card *ngIf="responseData" class="response-card">
+    <h3>Resultados</h3>
+    <p><strong>Matriz Q:</strong></p>
+    <pre>{{ responseData.Q | json }}</pre>
+    <p><strong>Matriz R:</strong></p>
+    <pre>{{ responseData.R | json }}</pre>
+    <p><strong>Estadísticas:</strong></p>
+    <pre>{{ responseData.analysis | json }}</pre>
+  </mat-card>
+
+  <!-- Error -->
+  <mat-card *ngIf="errorMessage" class="error-message">
+    <p>{{ errorMessage }}</p>
+  </mat-card>
+</div>

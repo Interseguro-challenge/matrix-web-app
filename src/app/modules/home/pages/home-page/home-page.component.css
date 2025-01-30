@@ -1,0 +1,39 @@
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+.form-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.matrix-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.matrix-row {
+  display: flex;
+  gap: 10px;
+}
+
+.matrix-container mat-form-field {
+  width: 70px;
+}
+
+.response-card {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f0f0f0;
+}
+
+.error-message {
+  margin-top: 10px;
+  padding: 10px;
+  color: #d32f2f;
+  background-color: #fbe9e7;
+}

@@ -1,0 +1,59 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <ng-container *ngFor="let field of formFields">
+      <div class="fields-container">
+        <mat-form-field appearance="outline" class="input">
+          <mat-label>{{ field.label }}</mat-label>
+
+          <input *ngIf="field.type === 'TEXT'" matInput [placeholder]="field.label" [formControlName]="field.name" />
+
+          <input
+            *ngIf="field.type === 'NUMBER'"
+            matInput
+            type="number"
+            [placeholder]="field.label"
+            [formControlName]="field.name"
+          />
+
+          <mat-select
+            *ngIf="field.type === 'SELECT'"
+            [formControlName]="field.name"
+            (selectionChange)="onOptionSelected(field)"
+          >
+            <mat-option *ngFor="let option of field.options" [value]="option.value">
+              {{ option.label }}
+            </mat-option>
+          </mat-select>
+
+          <ng-container *ngIf="field.type === 'DATE'">
+            <input matInput [matDatepicker]="picker" [formControlName]="field.name" />
+
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+              style="position: absolute; top: 6px; right: 10px;"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </ng-container>
+        </mat-form-field>
+
+        <ng-container *ngFor="let validation of field?.validations">
+          <mat-error
+            class="error-message"
+            *ngIf="form.get(field.name)?.touched && form.get(field.name)?.hasError(validation.name)"
+          >
+            {{ validation.errorMessage }}
+          </mat-error>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="buttons-container">
+    <button mat-raised-button (click)="onSearch()" color="primary" aria-label="Buscar">
+      <mat-icon>search</mat-icon>Buscar
+    </button>
+
+    <button mat-button type="button" (click)="onClear()">Limpiar</button>
+  </div>
+</form>
